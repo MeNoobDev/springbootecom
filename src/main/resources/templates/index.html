@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .product-image {
+            display: flex;
+            max-width: 300px;
+            height: 200px;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .card {
+            margin: 0 auto;
+            margin-bottom: 20px;
+            width: 18rem;
+        }
+
+        .center-text {
+            text-align: center;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" height="40" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/shop}" href="#">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart}" href="#">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link" th:text="${cartCount}">0</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <h2 class="center-text">Featured Products</h2>
+    <div class="row">
+        <div th:each="product, iterStat : ${products}" class="col-lg-4 col-md-6 mb-4" th:if="${iterStat.index lt 3}">
+            <div class="card h-100">
+                <img th:src="@{'/productImages/' + ${product.imageName}}" class="card-img-top product-image" alt="Product Image">
+                <div class="card-body">
+                    <h5 th:text="${product.name}" class="card-title"></h5>
+                    <p th:text="${product.description}" class="card-text"></p>
+                    <b>Price: <span th:text="${product.price}"></span></b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
